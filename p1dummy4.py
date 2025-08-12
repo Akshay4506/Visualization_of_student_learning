@@ -1,4 +1,3 @@
-# --- Import Required Libraries ---
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -8,8 +7,7 @@ from sklearn.linear_model import LinearRegression
 from mlxtend.frequent_patterns import apriori, association_rules
 
 # --- Load Dataset Dynamically ---
-file_path = input("Enter the path of the dataset: ")  # Ask user for dataset path
-
+file_path = input("Enter the path of the dataset: ")
 try:
     data = pd.read_csv(file_path)
     print("\nDataset Loaded Successfully!\n")
@@ -17,10 +15,8 @@ except Exception as e:
     print(f"Error loading dataset: {e}")
     exit()
 
-# Take only the first 100 rows(changable)
 data = data.head(100)
 
-# --- Required Columns Check (Updated to Match Your Dataset) ---
 required_columns = [
     'Student_ID', 'Study_Hours_per_Week', 'Midterm_Score', 'Final_Score',
     'Assignments_Avg', 'Quizzes_Avg', 'Projects_Score', 'Total_Score'
@@ -63,9 +59,7 @@ plt.ylabel("Final Score")
 plt.show()
 
 # --- 4. Performance Trends (Improved Readability) ---
-plt.figure(figsize=(12, 6))  # Increase figure size
-
-# Plotting different scores
+plt.figure(figsize=(12, 6)) 
 plt.plot(data['Student_ID'], data['Midterm_Score'], label='Midterm Score', marker='o', linestyle='-', markersize=6)
 plt.plot(data['Student_ID'], data['Final_Score'], label='Final Score', marker='s', linestyle='--', markersize=6)
 plt.plot(data['Student_ID'], data['Total_Score'], label='Total Score', marker='^', linestyle='-.', markersize=6)
@@ -75,15 +69,10 @@ plt.ylabel("Score")
 plt.title("Student Performance Trends")
 plt.legend()
 plt.grid(True)
-
-# Rotate x-axis labels for better visibility
 plt.xticks(rotation=90)
 
-# Display only every 5th Student ID to reduce clutter
 plt.xticks(ticks=data['Student_ID'][::5], labels=data['Student_ID'][::5])
-
 plt.show()
-
 
 # --- 5. Performance Distributions ---
 plt.figure(figsize=(12, 5))
@@ -100,7 +89,6 @@ plt.tight_layout()
 plt.show()
 
 # --- 6. Study Habits vs Performance (BoxPlot) ---
-# Binning Study Hours into Ranges to Reduce Congestion(grouping continuous numerical values into discrete intervals (or "bins"))
 bins = [0, 5, 10, 15, 20, 25, 30, 35]
 labels = ['0-5', '6-10', '11-15', '16-20', '21-25', '26-30', '31-35']
 data['Study_Hours_Binned'] = pd.cut(data['Study_Hours_per_Week'], bins=bins, labels=labels)
@@ -113,7 +101,6 @@ plt.xticks(rotation=45)
 plt.xlabel("Study Hours per Week (Binned)")
 plt.ylabel("Final Score")
 plt.title("Study Hours vs Final Score (Boxplot)")
-
 plt.show()
 
 # --- 7. Association Rule Mining ---
